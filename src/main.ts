@@ -14,3 +14,5 @@ for (let icon in ElementPlusIconsVue) {
 
 app.use(router).use(ElementPlus)
 app.mount('#app')
+
+export {}
