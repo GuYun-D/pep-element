@@ -7,7 +7,9 @@
       <el-header>
         <NavHeader v-model:collapse="isCollapse" />
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -24,5 +26,10 @@ let isCollapse = ref(false);
 .el-header {
   padding: 0;
   border-bottom: 1px solid rgb(173, 173, 173);
+}
+
+svg {
+  width: 1em;
+  height: 1em;
 }
 </style>
