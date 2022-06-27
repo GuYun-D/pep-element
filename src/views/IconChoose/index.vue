@@ -1,13 +1,11 @@
 <template>
   <div>
-    <IconChoose title="选择图标" v-model:visible="visible"> 选择图标 </IconChoose>
+    <choose-icon title="选择图标" v-model:visible="visible"> 选择图标 </choose-icon>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue-demi";
-import IconChoose from "../../components/IconChoose/src/index.vue";
-
 let visible = ref<boolean>(false);
 </script>
 
