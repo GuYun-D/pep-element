@@ -25,7 +25,7 @@ let isCollapse = ref(false);
 <style lang="scss" scope>
 .el-header {
   padding: 0;
-  border-bottom: 1px solid rgb(173, 173, 173);
+  box-shadow: 0 0 1px #ccc;
 }
 
 svg {
