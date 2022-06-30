@@ -17,11 +17,14 @@ const routes: RouteRecordRaw[] = [
         path: '/choose-area',
         component: () => import('../views/chooseArea/index.vue')
       }, {
-        path: 'trend',
+        path: '/trend',
         component: () => import('../views/trend/index.vue')
       }, {
-        path: 'notification',
+        path: '/notification',
         component: import('../views/notification/index.vue')
+      }, {
+        path: '/list',
+        component: import('../views/list/index.vue')
       }
     ]
   }

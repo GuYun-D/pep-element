@@ -1,7 +1,17 @@
 <template>
-  <el-badge style="cursor: pointer" :value="value" :max="max" :is-dot="isDot">
-    <component :is="`el-icon-${toLine(icon)}`"></component>
-  </el-badge>
+  <el-popover placement="bottom" :width="300" trigger="click">
+    <slot>这是一段内容</slot>
+    <template #reference>
+      <el-badge
+        style="cursor: pointer"
+        :value="value"
+        :max="max"
+        :is-dot="isDot"
+      >
+        <component :is="`el-icon-${toLine(icon)}`"></component>
+      </el-badge>
+    </template>
+  </el-popover>
 </template>
 
 <script setup lang="ts">

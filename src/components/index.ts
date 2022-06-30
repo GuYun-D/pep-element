@@ -3,12 +3,14 @@ import chooseArea from './chooseArea'
 import chooseIcon from './IconChoose'
 import trend from './trend'
 import notification from './notification'
+import list from './list'
 
 const components = [
   chooseArea,
   chooseIcon,
   trend,
-  notification
+  notification,
+  list
 ]
 
 export default {
