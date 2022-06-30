@@ -25,6 +25,9 @@ const routes: RouteRecordRaw[] = [
       }, {
         path: '/list',
         component: import('../views/list/index.vue')
+      }, {
+        path: '/menu',
+        component: import('../views/menu/index.vue')
       }
     ]
   }
