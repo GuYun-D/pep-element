@@ -1,37 +1,37 @@
 <template>
   <el-menu :default-active="defaultActive" :router="router" v-bind="$attrs">
-    <template v-for="item in data" :key="item.name">
+    <template v-for="item in data" :key="item[name]">
       <el-menu-item
-        v-if="!item.children || !item.children.length"
-        :index="item.index"
+        v-if="!item[children] || !item[children].length"
+        :index="item[index]"
       >
         <component
-          v-if="item.icon"
-          :is="`el-icon-${toLine(item.icon)}`"
+          v-if="item[icon]"
+          :is="`el-icon-${toLine(item[icon])}`"
         ></component>
-        <span class="title-text">{{ item.name }}</span>
+        <span class="title-text">{{ item[name] }}</span>
       </el-menu-item>
       <el-sub-menu
-        v-if="item.children && item.children.length"
-        :index="item.index"
+        v-if="item[children] && item[children].length"
+        :index="item[index]"
       >
         <template #title>
           <component
-            v-if="item.icon"
-            :is="`el-icon-${toLine(item.icon)}`"
+            v-if="item[icon]"
+            :is="`el-icon-${toLine(item[icon])}`"
           ></component>
-          <span class="title-text">{{ item.name }}</span>
+          <span class="title-text">{{ item[name] }}</span>
         </template>
         <el-menu-item
-          v-for="item1 in item.children"
-          :key="item1.name"
-          :index="item1.index"
+          v-for="item1 in item[children]"
+          :key="item1[name]"
+          :index="item1[index]"
         >
           <component
-            v-if="item1.icon"
-            :is="`el-icon-${toLine(item1.icon)}`"
+            v-if="item1[icon]"
+            :is="`el-icon-${toLine(item1[icon])}`"
           ></component>
-          <span class="title-text">{{ item1.name }}</span>
+          <span class="title-text">{{ item1[name] }}</span>
         </el-menu-item>
       </el-sub-menu>
     </template>
@@ -40,13 +40,12 @@
 
 <script setup lang="ts">
 import { PropType } from "vue-demi";
-import { MenuItem } from "./types";
 import { toLine } from "../../../utils";
 
 const props = defineProps({
   // 侧边栏数据
   data: {
-    type: Array as PropType<MenuItem[]>,
+    type: Array as PropType<any[]>,
     required: true,
   },
   // 默认选中菜单
@@ -58,6 +57,23 @@ const props = defineProps({
   router: {
     type: Boolean,
     default: false,
+  },
+  // 菜单标题的键名
+  name: {
+    type: String,
+    default: "name",
+  },
+  index: {
+    type: String,
+    default: "index",
+  },
+  icon: {
+    type: String,
+    default: "icon",
+  },
+  children: {
+    type: String,
+    default: 'children',
   },
 });
 

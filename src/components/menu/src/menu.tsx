@@ -1,12 +1,11 @@
 import { defineComponent, PropType, useAttrs } from 'vue'
-import {MenuItem} from './types'
 import * as Icons from '@element-plus/icons-vue'
 import './style/index.scss'
 
 export default defineComponent({
   props: {
     data: {
-      type: Array as PropType<MenuItem[]>,
+      type: Array as PropType<any[]>,
       required: true,
     },
     // 默认选中菜单
@@ -19,31 +18,47 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    name: {
+      type: String,
+      default: "name",
+    },
+    index: {
+      type: String,
+      default: "index",
+    },
+    icon: {
+      type: String,
+      default: "icon",
+    },
+    children: {
+      type: String,
+      default: 'children',
+    },
   },
 
   setup(props, ctx){
-    const renderMenu = (data: MenuItem[]) => {
-      return data.map((item: MenuItem) => {
-        item.i = (Icons as any)[item.icon!]
+    const renderMenu = (data: any[]) => {
+      return data.map((item: any) => {
+        item.i = (Icons as any)[item[props.icon!]]
         const slots = {
           title: () => {
             return (<>
               <item.i></item.i>
-              <span>{item.name}</span>
+              <span>{item[props.name]}</span>
             </>)
           }
         }
-        if(item.children && item.children.length){
+        if(item[props.children] && item[props.children].length){
           return (
-            <el-sub-menu index={item.index} v-slots={slots}>
-              {renderMenu(item.children)}
+            <el-sub-menu index={item[props.index]} v-slots={slots}>
+              {renderMenu(item[props.children])}
             </el-sub-menu>
           )
         }
         return (
-          <el-menu-item index={item.index}>
+          <el-menu-item index={item[props.index]}>
             <item.i></item.i>
-            <span>{item.name}</span>
+            <span>{item[props.name]}</span>
           </el-menu-item>
         )
       })
