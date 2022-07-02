@@ -6,6 +6,7 @@ import notification from './notification'
 import list from './list'
 import PepMenu from './menu'
 import Progress from './progress'
+import chooseTime from './chooseTime'
 
 const components = [
   chooseArea,
@@ -14,7 +15,8 @@ const components = [
   notification,
   list,
   PepMenu,
-  Progress
+  Progress,
+  chooseTime
 ]
 
 export default {
