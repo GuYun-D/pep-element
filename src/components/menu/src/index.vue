@@ -6,6 +6,7 @@
         :index="item[index]"
       >
         <component
+          class="icon"
           v-if="item[icon]"
           :is="`el-icon-${toLine(item[icon])}`"
         ></component>
@@ -73,7 +74,7 @@ const props = defineProps({
   },
   children: {
     type: String,
-    default: 'children',
+    default: "children",
   },
 });
 
@@ -83,6 +84,8 @@ console.log(props.data);
 <style scoped lang="scss">
 svg {
   margin-right: 4px;
+  width: 1em;
+  height: 1em;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {

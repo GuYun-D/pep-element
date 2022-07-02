@@ -43,7 +43,7 @@ export default defineComponent({
         const slots = {
           title: () => {
             return (<>
-              <item.i></item.i>
+              <item.i className="pep-icon"></item.i>
               <span>{item[props.name]}</span>
             </>)
           }
@@ -57,7 +57,7 @@ export default defineComponent({
         }
         return (
           <el-menu-item index={item[props.index]}>
-            <item.i></item.i>
+            <item.i className="pep-icon"></item.i>
             <span>{item[props.name]}</span>
           </el-menu-item>
         )

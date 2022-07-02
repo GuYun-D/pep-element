@@ -26,10 +26,10 @@ let isCollapse = ref(false);
 .el-header {
   padding: 0;
   box-shadow: 0 0 1px #ccc;
-}
-
-svg {
-  width: 1em;
-  height: 1em;
+  
+  svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 </style>
