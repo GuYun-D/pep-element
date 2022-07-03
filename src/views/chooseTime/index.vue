@@ -5,6 +5,11 @@
       @start-change="startChange"
       @end-change="endChange"
     ></pep-time>
+
+    <pep-date
+      @start-change="dateStart"
+      @end-change="dateEnd"
+    ></pep-date>
   </div>
 </template>
 
@@ -12,6 +17,11 @@
 interface EndTimeModel {
   startTime: string;
   endTime: string;
+}
+
+interface EndValue {
+  startDate: string;
+  endDate: string;
 }
 
 const startChange = (val: string) => {
@@ -25,6 +35,14 @@ const endChange = (val: EndTimeModel) => {
 const startOptions = {
   size: "small",
   clearable: false,
+};
+
+const dateStart = (date: Date) => {
+  console.log(date);
+};
+
+const dateEnd = (date: EndValue) => {
+  console.log(date);
 };
 </script>
 
