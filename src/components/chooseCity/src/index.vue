@@ -1,14 +1,9 @@
 <template>
-  <el-popover
-    placement="bottom-end"
-    v-model:visiable="visiable"
-    :width="500"
-    trigger="click"
-  >
+  <el-popover placement="bottom-end" :width="500" trigger="click">
     <template #reference>
       <div class="result">
         <div>{{ result }}</div>
-        <div :class="{ rotate: visiable }">
+        <div :class="{ rotate: visible }">
           <el-icon-arrowdown></el-icon-arrowdown>
         </div>
       </div>
@@ -43,15 +38,21 @@
           class="city-item"
           v-for="(item, key) in Object.keys(cities)"
           :key="key"
+          @click="handleClickChart(item)"
         >
           {{ item }}
         </div>
         <el-scrollbar :max-height="300">
           <template v-for="(value, key) in cities" :key="key">
-            <el-row style="margin-bottom: 10px">
+            <el-row style="margin-bottom: 10px" :id="key">
               <el-col :span="2">{{ key }}:</el-col>
               <el-col class="city-name" :span="20">
-                <div class="city-name-item" v-for="item in value" :key="item.id">
+                <div
+                  class="city-name-item"
+                  v-for="item in value"
+                  :key="item.id"
+                  @click="handleChooseCity(item)"
+                >
                   <div>{{ item.name }}</div>
                 </div>
               </el-col>
@@ -65,12 +66,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { City } from "./types";
 import city from "../lib/cities";
 
+const emits = defineEmits(["change"]);
 const result = ref<string>("请选择");
-const visiable = ref(false);
+const visible = ref(false);
 const radioValue = ref<string>("按城市");
-const selectValue = ref("");
+const selectValue = ref<string>(""); // 下拉框的值
 const cities = ref(city.cities);
 
 const options = ref([
@@ -95,6 +98,19 @@ const options = ref([
     label: "Option5",
   },
 ]);
+
+const handleChooseCity = (city: City) => {
+  result.value = city.name;
+  visible.value = false;
+  emits("change", city);
+};
+
+const handleClickChart = (chart: string) => {
+  const el = document.getElementById(chart);
+  if(el){
+    el.scrollIntoView()
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -135,12 +151,12 @@ const options = ref([
     cursor: pointer;
   }
 
-  &-name{
+  &-name {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 
-    &-item{
+    &-item {
       margin-right: 6px;
       margin-bottom: 6px;
       cursor: pointer;
