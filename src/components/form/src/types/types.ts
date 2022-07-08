@@ -1,3 +1,4 @@
+import { CSSProperties } from "vue"
 import { RuleItem } from "./rule"
 export type FormType = 'cascader' | 'checkbox' | 'radio' | 'checkbox-group' |
   'checkbox-button' | 'color-picker' |
@@ -18,5 +19,7 @@ export interface FormOptions {
     clearable?: boolean
     showPassword?: boolean
     disabled?: boolean
-  }
+    style?: CSSProperties
+  },
+  children?: FormOptions[]
 }
