@@ -11,10 +11,10 @@ export interface FormOptions {
   value: any
   label?: string
   prop?: string
-  rule?: RuleItem
+  rules?: RuleItem[]
   placeholer?: string
   // 表单特有的属性
-  attrs: {
+  attrs?: {
     clearable?: boolean
     showPassword?: boolean
     disabled?: boolean

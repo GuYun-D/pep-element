@@ -47,6 +47,7 @@ export interface RuleItem {
   pattern?: RegExp | string;
   min?: number; // Range of type 'string' and 'array'
   max?: number; // Range of type 'string' and 'array'
+  trigger?: string | string[]
   len?: number; // Length of type 'string' and 'array'
   enum?: Array<string | number | boolean | null | undefined>; // possible values of type 'enum'
   whitespace?: boolean;
