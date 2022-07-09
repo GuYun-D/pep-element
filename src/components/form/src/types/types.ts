@@ -1,5 +1,6 @@
+import { Callback } from "element-plus"
 import { CSSProperties } from "vue"
-import { RuleItem } from "./rule"
+import { RuleItem, ValidateFieldsError } from "./rule"
 export type FormType = 'cascader' | 'checkbox' | 'radio' | 'checkbox-group' |
   'checkbox-button' | 'color-picker' |
   'date-picker' | 'input' | 'input-number' |
@@ -39,4 +40,30 @@ export interface FormOptions {
     disabled?: boolean // 是否禁用
     limit?: number // 允许上传的最大文件数
   }
+}
+
+export interface ValidateFieldCallback {
+  (message?: string, invalidFields?: ValidateFieldsError): void,
+}
+
+export interface FormInstance {
+  registerLabelWidth(width: number, oldWidth: number): void,
+  deregisterLabelWidth(width: number): void,
+  autoLabelWidth: string | undefined,
+  emit: (evt: string, ...args: any[]) => void,
+  labelSuffix: string,
+  inline?: boolean,
+  model?: Record<string, unknown>,
+  size?: string,
+  showMessage?: boolean,
+  labelPosition?: string,
+  labelWidth?: string,
+  rules?: Record<string, unknown>,
+  statusIcon?: boolean,
+  hideRequiredAsterisk?: boolean,
+  disabled?: boolean,
+  validate: (callback?: Callback) => Promise<boolean>,
+  resetFields: () => void,
+  clearValidate: (props?: string | string[]) => void,
+  validateField: (props: string | string[], cb: ValidateFieldCallback) => void,
 }

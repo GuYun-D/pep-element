@@ -7,11 +7,16 @@
       <template #uploadTip>
         <div class="tip">只能上传png/jpg</div>
       </template>
+      <template #action="scope">
+        <el-button type="primary" @click="submitForm(scope)">Create</el-button>
+        <el-button @click="resetForm(scope)">Reset</el-button>
+      </template>
     </pep-form>
   </div>
 </template>
 
 <script setup lang="ts">
+import { FormInstance } from "element-plus";
 import { FormOptions } from "../../components/form/src/types/types";
 
 const options: FormOptions[] = [
@@ -158,18 +163,31 @@ const options: FormOptions[] = [
     type: "upload",
     label: "上传",
     prop: "pic",
-    rules: [
-      {
-        required: true,
-        message: "图片必传",
-        trigger: "blur",
-      },
-    ],
     uploadAttrs: {
       actions: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
     },
   },
 ];
+
+interface Scope {
+  form: FormInstance;
+  model: any;
+}
+
+const resetForm = (scope: Scope) => {
+  scope.form.resetFields();
+};
+
+const submitForm = (scope: Scope) => {
+  // 验证
+  scope.form.validate((valid: boolean) => {
+    if (valid) {
+      console.log("提交", scope.model);
+    } else {
+      console.log("验证失败");
+    }
+  });
+};
 </script>
 
 <style scoped>

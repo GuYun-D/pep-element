@@ -1,6 +1,7 @@
 <template>
   <el-form
     v-if="model"
+    ref="form"
     :validate-on-rule-change="false"
     v-bind="$attrs"
     :model="model"
@@ -57,6 +58,10 @@
         </component>
       </el-form-item>
     </template>
+
+    <el-form-item>
+      <slot name="action" :form="form" :model="model"></slot>
+    </el-form-item>
   </el-form>
 
   {{ model }}
@@ -65,7 +70,7 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref, watch } from "vue";
 import cloneDeep from "lodash/cloneDeep";
-import { FormOptions } from "./types/types";
+import { FormInstance, FormOptions } from "./types/types";
 const props = defineProps({
   options: {
     // 表单的配置项
@@ -74,8 +79,8 @@ const props = defineProps({
   },
 
   httpRequest: {
-    type: Function
-  }
+    type: Function,
+  },
 });
 
 const emits = defineEmits([
@@ -92,6 +97,7 @@ const emits = defineEmits([
 
 let model = ref<any>();
 let rules = ref<any>();
+const form = ref<FormInstance | null>(null);
 
 const createModelAndRules = () => {
   if (props.options && props.options.length) {
