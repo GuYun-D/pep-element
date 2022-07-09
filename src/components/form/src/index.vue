@@ -1,5 +1,6 @@
 <template>
   <el-form
+    v-if="model"
     :validate-on-rule-change="false"
     v-bind="$attrs"
     :model="model"
@@ -44,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from "vue";
+import { onMounted, PropType, ref, watch } from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import { FormOptions } from "./types/types";
 const props = defineProps({
@@ -59,18 +60,32 @@ let model = ref<any>();
 let rules = ref<any>();
 
 const createModelAndRules = () => {
-  const m: any = {};
-  const r: any = {};
-  props.options.map((item: FormOptions) => {
-    m[item.prop!] = item.value;
-    r[item.prop!] = item.rules;
-  });
+  if (props.options && props.options.length) {
+    const m: any = {};
+    const r: any = {};
+    props.options.map((item: FormOptions) => {
+      m[item.prop!] = item.value;
+      r[item.prop!] = item.rules;
+    });
 
-  model.value = cloneDeep(m);
-  rules.value = cloneDeep(r);
+    model.value = cloneDeep(m);
+    rules.value = cloneDeep(r);
+  }
 };
 
-createModelAndRules();
+onMounted(() => {
+  createModelAndRules();
+});
+
+watch(
+  () => props.options,
+  () => {
+    createModelAndRules();
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <style scoped lang="scss">

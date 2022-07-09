@@ -84,7 +84,66 @@ const options: FormOptions[] = [
     attrs: {
       style: {
         width: "100%",
-        color: "#f40"
+        color: "#f40",
+      },
+    },
+  },
+  {
+    type: "checkbox-group",
+    value: [],
+    label: "爱好",
+    placeholer: "请选择职位",
+    children: [
+      {
+        type: "checkbox",
+        label: "足球",
+        value: "1",
+      },
+      {
+        type: "checkbox",
+        label: "篮球",
+        value: "2",
+      },
+      {
+        type: "checkbox",
+        label: "排球",
+        value: "3",
+      },
+    ],
+    attrs: {
+      style: {
+        width: "100%",
+        color: "#f40",
+      },
+    },
+  },
+  {
+    type: "radio-group",
+    value: '男',
+    label: "性别",
+    prop: 'gender',
+    placeholer: "请选择性别",
+    children: [
+      {
+        type: "radio",
+        label: "男",
+        value: "1",
+      },
+      {
+        type: "radio",
+        label: "女",
+        value: "2",
+      },
+      {
+        type: "radio",
+        label: "保密",
+        value: "3",
+      },
+    ],
+    attrs: {
+      style: {
+        width: "100%",
+        color: "#f40",
       },
     },
   },
