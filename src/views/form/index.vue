@@ -1,6 +1,13 @@
 <template>
   <div>
-    <pep-form label-width="100px" :options="options"></pep-form>
+    <pep-form label-width="100px" :options="options">
+      <template #uploadArea>
+        <el-button size="small" type="primary">上传</el-button>
+      </template>
+      <template #uploadTip>
+        <div class="tip">只能上传png/jpg</div>
+      </template>
+    </pep-form>
   </div>
 </template>
 
@@ -119,9 +126,9 @@ const options: FormOptions[] = [
   },
   {
     type: "radio-group",
-    value: '男',
+    value: "男",
     label: "性别",
-    prop: 'gender',
+    prop: "gender",
     placeholer: "请选择性别",
     children: [
       {
@@ -145,6 +152,21 @@ const options: FormOptions[] = [
         width: "100%",
         color: "#f40",
       },
+    },
+  },
+  {
+    type: "upload",
+    label: "上传",
+    prop: "pic",
+    rules: [
+      {
+        required: true,
+        message: "图片必传",
+        trigger: "blur",
+      },
+    ],
+    uploadAttrs: {
+      actions: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
     },
   },
 ];

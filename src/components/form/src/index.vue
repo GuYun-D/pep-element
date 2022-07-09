@@ -13,10 +13,28 @@
         :prop="item.prop"
       >
         <component
+          v-if="item.type !== 'upload'"
           v-bind="item.attrs"
           :is="`el-${item.type}`"
           v-model="model[item.prop]"
         ></component>
+        <el-upload
+          v-else
+          v-bind="item.uploadAttrs"
+          :on-preview="onPreview"
+          :on-remove="onRemove"
+          :on-success="onSuccess"
+          :on-error="onError"
+          :on-progress="onProgress"
+          :on-change="onChange"
+          :before-upload="beforeUpload"
+          :before-remove="beforeRemove"
+          :http-request="httpRequest"
+          :on-exceed="onExceed"
+        >
+          <slot name="uploadArea"></slot>
+          <slot name="uploadTip"></slot>
+        </el-upload>
       </el-form-item>
 
       <el-form-item
@@ -54,7 +72,23 @@ const props = defineProps({
     type: Array as PropType<FormOptions[]>,
     required: true,
   },
+
+  httpRequest: {
+    type: Function
+  }
 });
+
+const emits = defineEmits([
+  "on-preview",
+  "on-remove",
+  "on-success",
+  "on-error",
+  "on-progress",
+  "on-change",
+  "before-upload",
+  "before-remove",
+  "on-exceed",
+]);
 
 let model = ref<any>();
 let rules = ref<any>();
@@ -86,6 +120,42 @@ watch(
     deep: true,
   }
 );
+
+const onPreview = (file: any) => {
+  emits("on-preview", file);
+};
+
+const onRemove = (file: any, fileList: any) => {
+  emits("on-remove", file, fileList);
+};
+
+const onSuccess = (response: any, file: any, fileList: any) => {
+  emits("on-success", response, file, fileList);
+};
+
+const onError = (err: any, file: any, fileList: any) => {
+  emits("on-error", err, file, fileList);
+};
+
+const onProgress = (event: any, file: any, fileList: any) => {
+  emits("on-progress", event, file, fileList);
+};
+
+const onChange = (file: any, fileList: any) => {
+  emits("on-change", file, fileList);
+};
+
+const beforeUpload = (file: any) => {
+  emits("before-upload", file);
+};
+
+const beforeRemove = (file: any, fileList: any) => {
+  emits("before-remove", file, fileList);
+};
+
+const onExceed = (files: any, fileList: any) => {
+  emits("on-exceed", files, fileList);
+};
 </script>
 
 <style scoped lang="scss">
