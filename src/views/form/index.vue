@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pep-form label-width="100px" :options="options">
+    <pep-form ref="pepFormRef" label-width="100px" :options="options">
       <template #uploadArea>
         <el-button size="small" type="primary">上传</el-button>
       </template>
@@ -9,7 +9,7 @@
       </template>
       <template #action="scope">
         <el-button type="primary" @click="submitForm(scope)">Create</el-button>
-        <el-button @click="resetForm(scope)">Reset</el-button>
+        <el-button @click="resetForm">Reset</el-button>
       </template>
     </pep-form>
   </div>
@@ -17,6 +17,8 @@
 
 <script setup lang="ts">
 import { FormInstance } from "element-plus";
+import { ref } from "vue";
+import form from "../../components/form";
 import { FormOptions } from "../../components/form/src/types/types";
 
 const options: FormOptions[] = [
@@ -105,6 +107,7 @@ const options: FormOptions[] = [
     value: [],
     label: "爱好",
     placeholer: "请选择职位",
+    prop: "hobbies",
     children: [
       {
         type: "checkbox",
@@ -171,10 +174,11 @@ const options: FormOptions[] = [
     type: "editor",
     prop: "desc",
     label: "描述",
-    value: '',
+    value: "",
+    editorHeight: 400,
     // @ts-ignore
     editorConfig: {
-      placeholder: '请输入内容'
+      placeholder: "请输入内容",
     },
     rules: [
       {
@@ -183,7 +187,12 @@ const options: FormOptions[] = [
         trigger: "blur",
       },
     ],
-    
+
+    attrs: {
+      style: {
+        height: "100px",
+      },
+    },
   },
 ];
 
@@ -191,10 +200,6 @@ interface Scope {
   form: FormInstance;
   model: any;
 }
-
-const resetForm = (scope: Scope) => {
-  scope.form.resetFields();
-};
 
 const submitForm = (scope: Scope) => {
   // 验证
@@ -205,6 +210,11 @@ const submitForm = (scope: Scope) => {
       console.log("验证失败");
     }
   });
+};
+
+const pepFormRef = ref();
+const resetForm = () => {
+  pepFormRef.value.resetFields();
 };
 </script>
 

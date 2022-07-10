@@ -37,7 +37,10 @@
           <slot name="uploadTip"></slot>
         </el-upload>
 
-        <div v-if="item.type === 'editor'">
+        <div
+          v-if="item.type === 'editor'"
+          style="border: 1px solid #ccc; border-radius: 10px; overflow: hidden"
+        >
           <Toolbar
             style="border-bottom: 1px solid #ccc"
             :editor="editorRef"
@@ -46,11 +49,11 @@
           />
 
           <Editor
-            style="height: 500px; overflow-y: hidden"
             v-model="model[item.prop]"
             :defaultConfig="editorConfig"
             :mode="item.editorMode || 'default'"
             @onCreated="handleCreated"
+            :style="item.attrs.style"
           />
         </div>
       </el-form-item>
@@ -86,7 +89,6 @@
 
 <script setup lang="ts">
 import {
-  nextTick,
   onMounted,
   PropType,
   ref,
@@ -128,13 +130,24 @@ let rules = ref<any>();
 const form = ref<FormInstance | null>(null);
 // wangeditor
 const editorRef = shallowRef();
-const valueHtml = ref();
 const toolbarConfig = {};
 const editorConfig = { placeholder: "请输入内容..." };
+let editorProp: string;
 onBeforeUnmount(() => {
   const editor = editorRef.value;
   if (editor == null) return;
   editor.destroy();
+});
+
+const resetFields = () => {
+  form.value!.resetFields();
+  if (props.options && props.options.length) {
+    editorRef.value.clear();
+  }
+};
+
+defineExpose({
+  resetFields,
 });
 
 const handleCreated = (editor: any) => {
@@ -148,6 +161,10 @@ const createModelAndRules = () => {
     props.options.map((item: FormOptions) => {
       m[item.prop!] = item.value;
       r[item.prop!] = item.rules;
+
+      if (item.type === "editor") {
+        editorProp = item.prop!;
+      }
     });
 
     model.value = cloneDeep(m);
