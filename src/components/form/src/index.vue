@@ -127,39 +127,39 @@ watch(
   }
 );
 
-const onPreview = (file: any) => {
+const onPreview = (file: File) => {
   emits("on-preview", file);
 };
 
-const onRemove = (file: any, fileList: any) => {
+const onRemove = (file: File, fileList: FileList) => {
   emits("on-remove", file, fileList);
 };
 
-const onSuccess = (response: any, file: any, fileList: any) => {
+const onSuccess = (response: any, file: File, fileList: FileList) => {
   emits("on-success", response, file, fileList);
 };
 
-const onError = (err: any, file: any, fileList: any) => {
+const onError = (err: any, file: File, fileList: FileList) => {
   emits("on-error", err, file, fileList);
 };
 
-const onProgress = (event: any, file: any, fileList: any) => {
+const onProgress = (event: any, file: File, fileList: FileList) => {
   emits("on-progress", event, file, fileList);
 };
 
-const onChange = (file: any, fileList: any) => {
+const onChange = (file: File, fileList: FileList) => {
   emits("on-change", file, fileList);
 };
 
-const beforeUpload = (file: any) => {
+const beforeUpload = (file: File) => {
   emits("before-upload", file);
 };
 
-const beforeRemove = (file: any, fileList: any) => {
+const beforeRemove = (file: File, fileList: FileList) => {
   emits("before-remove", file, fileList);
 };
 
-const onExceed = (files: any, fileList: any) => {
+const onExceed = (files: File, fileList: FileList) => {
   emits("on-exceed", files, fileList);
 };
 </script>
