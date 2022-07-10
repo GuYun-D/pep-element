@@ -1,12 +1,13 @@
 import { Callback } from "element-plus"
 import { CSSProperties } from "vue"
+import { IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 import { RuleItem, ValidateFieldsError } from "./rule"
 export type FormType = 'cascader' | 'checkbox' | 'radio' | 'checkbox-group' |
   'checkbox-button' | 'color-picker' |
   'date-picker' | 'input' | 'input-number' |
   'radio-button' | 'radio-group' | 'rate' |
   'select' | 'option' | 'slider' | 'switch' | 'time-picker' |
-  'time-select' | 'transfer' | 'upload'
+  'time-select' | 'transfer' | 'upload' | 'editor'
 
 export interface FormOptions {
   type: FormType
@@ -39,7 +40,10 @@ export interface FormOptions {
     antuUpload?: boolean // 是否自动上传
     disabled?: boolean // 是否禁用
     limit?: number // 允许上传的最大文件数
-  }
+  },
+  editorConfig?: IEditorConfig
+  toolBarConfig?: IToolbarConfig
+  editorMode?: WangEditorMode
 }
 
 export interface ValidateFieldCallback {
@@ -67,3 +71,5 @@ export interface FormInstance {
   clearValidate: (props?: string | string[]) => void,
   validateField: (props: string | string[], cb: ValidateFieldCallback) => void,
 }
+
+export type WangEditorMode = 'default' | 'simple'

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
+    "@wangeditor/editor": "^5.1.1",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "element-plus": "^2.2.6",
     "lodash": "^4.17.21",
     "sass": "^1.53.0",

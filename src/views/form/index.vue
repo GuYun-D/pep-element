@@ -167,6 +167,24 @@ const options: FormOptions[] = [
       actions: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
     },
   },
+  {
+    type: "editor",
+    prop: "desc",
+    label: "描述",
+    value: '',
+    // @ts-ignore
+    editorConfig: {
+      placeholder: '请输入内容'
+    },
+    rules: [
+      {
+        required: true,
+        message: "描述不能为空",
+        trigger: "blur",
+      },
+    ],
+    
+  },
 ];
 
 interface Scope {

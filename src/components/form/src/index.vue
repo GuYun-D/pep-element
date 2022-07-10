@@ -14,13 +14,13 @@
         :prop="item.prop"
       >
         <component
-          v-if="item.type !== 'upload'"
+          v-if="item.type !== 'upload' && item.type !== 'editor'"
           v-bind="item.attrs"
           :is="`el-${item.type}`"
           v-model="model[item.prop]"
         ></component>
         <el-upload
-          v-else
+          v-if="item.type === 'upload'"
           v-bind="item.uploadAttrs"
           :on-preview="onPreview"
           :on-remove="onRemove"
@@ -36,6 +36,23 @@
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
         </el-upload>
+
+        <div v-if="item.type === 'editor'">
+          <Toolbar
+            style="border-bottom: 1px solid #ccc"
+            :editor="editorRef"
+            :defaultConfig="toolbarConfig"
+            :mode="item.editorMode || 'default'"
+          />
+
+          <Editor
+            style="height: 500px; overflow-y: hidden"
+            v-model="model[item.prop]"
+            :defaultConfig="editorConfig"
+            :mode="item.editorMode || 'default'"
+            @onCreated="handleCreated"
+          />
+        </div>
       </el-form-item>
 
       <el-form-item
@@ -68,9 +85,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, PropType, ref, watch } from "vue";
+import {
+  nextTick,
+  onMounted,
+  PropType,
+  ref,
+  watch,
+  shallowRef,
+  onBeforeUnmount,
+} from "vue";
 import cloneDeep from "lodash/cloneDeep";
-import { FormInstance, FormOptions } from "./types/types";
+import { FormInstance, FormOptions, WangEditorMode } from "./types/types";
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import "@wangeditor/editor/dist/css/style.css";
+
 const props = defineProps({
   options: {
     // 表单的配置项
@@ -98,6 +126,20 @@ const emits = defineEmits([
 let model = ref<any>();
 let rules = ref<any>();
 const form = ref<FormInstance | null>(null);
+// wangeditor
+const editorRef = shallowRef();
+const valueHtml = ref();
+const toolbarConfig = {};
+const editorConfig = { placeholder: "请输入内容..." };
+onBeforeUnmount(() => {
+  const editor = editorRef.value;
+  if (editor == null) return;
+  editor.destroy();
+});
+
+const handleCreated = (editor: any) => {
+  editorRef.value = editor; // 记录 editor 实例，重要！
+};
 
 const createModelAndRules = () => {
   if (props.options && props.options.length) {
