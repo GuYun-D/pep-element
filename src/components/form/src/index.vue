@@ -146,8 +146,18 @@ const resetFields = () => {
   }
 };
 
+const validate = () => {
+  return form.value!.validate
+}
+
+const getFormData = () => {
+  return model.value
+}
+
 defineExpose({
   resetFields,
+  validate,
+  getFormData
 });
 
 const handleCreated = (editor: any) => {

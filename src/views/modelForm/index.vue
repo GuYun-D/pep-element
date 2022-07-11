@@ -1,25 +1,49 @@
 <template>
   <div>
-    <pep-form ref="pepFormRef" label-width="100px" :options="options">
-      <template #uploadArea>
-        <el-button size="small" type="primary">上传</el-button>
+    <pep-model-form
+      v-model:visible="visible"
+      :options="options"
+      title="啊哈哈哈"
+    >
+      <template #default> </template>
+      <template #footer="{ form }">
+        <span class="dialog-footer">
+          <el-button @click="cancel(form)">Cancel</el-button>
+          <el-button type="primary" @click="confirm(form)">Confirm</el-button>
+        </span>
       </template>
-      <template #uploadTip>
-        <div class="tip">只能上传png/jpg</div>
-      </template>
-      <template #action="scope">
-        <el-button type="primary" @click="submitForm(scope)">Create</el-button>
-        <el-button @click="resetForm">Reset</el-button>
-      </template>
-    </pep-form>
+    </pep-model-form>
+    <el-button @click="open" type="primary">弹出</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormInstance } from "element-plus";
-import { ref } from "vue";
-import form from "../../components/form";
+import { ElMessage, FormInstance } from "element-plus";
+import { ref } from "vue-demi";
 import { FormOptions } from "../../components/form/src/types/types";
+
+const visible = ref<boolean>(false);
+
+const open = (form: FormInstance) => {
+  visible.value = true;
+};
+
+const cancel = (form: FormInstance) => {
+  visible.value = false;
+};
+
+const confirm = (form: any) => {
+  const validate = form.validate();
+  const formDate = form.getFormData();
+  validate((validate: Boolean) => {
+    if (validate) {
+      ElMessage.success("成功");
+      console.log(formDate);
+    } else {
+      ElMessage.error("失败");
+    }
+  });
+};
 
 const options: FormOptions[] = [
   {
@@ -170,52 +194,5 @@ const options: FormOptions[] = [
       actions: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
     },
   },
-  {
-    type: "editor",
-    prop: "desc",
-    label: "描述",
-    value: "",
-    // @ts-ignore
-    editorConfig: {
-      placeholder: "请输入内容",
-    },
-    rules: [
-      {
-        required: true,
-        message: "描述不能为空",
-        trigger: "blur",
-      },
-    ],
-
-    attrs: {
-      style: {
-        height: "100px",
-      },
-    },
-  },
 ];
-
-interface Scope {
-  form: FormInstance;
-  model: any;
-}
-
-const submitForm = (scope: Scope) => {
-  // 验证
-  scope.form.validate((valid: boolean) => {
-    if (valid) {
-      console.log("提交", scope.model);
-    } else {
-      console.log("验证失败");
-    }
-  });
-};
-
-const pepFormRef = ref();
-const resetForm = () => {
-  pepFormRef.value.resetFields();
-};
 </script>
-
-<style scoped>
-</style>

@@ -94,6 +94,11 @@ const data = [
     index: "/form",
   },
   {
+   icon: 'Setting',
+   name: '弹出表单',
+   index: '/model-form'
+  },
+  {
     icon: "Grid",
     name: "表格",
     index: "/table",
