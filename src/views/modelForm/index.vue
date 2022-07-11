@@ -99,7 +99,7 @@ const options: FormOptions[] = [
       {
         required: true,
         message: "职位不能为空",
-        trigger: "blur",
+        trigger: "change",
       },
     ],
     children: [

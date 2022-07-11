@@ -1,8 +1,33 @@
 <template>
-  <el-dialog v-model="dialogVisible" v-bind="$attrs" :options="options">
-    <template #title> <slot name="header"></slot> </template>
+  <el-dialog
+    :class="{ 'gy-choose-icon-dialog-body-height': isScroll }"
+    v-model="dialogVisible"
+    v-bind="$attrs"
+    :options="options"
+  >
+    <template #header> <slot name="header"></slot> </template>
     <template #default>
-      <pep-form ref="form" :options="options"></pep-form>
+      <pep-form
+        :on-preview="onPreview"
+        :on-remove="onRemove"
+        :on-success="onSuccess"
+        :on-error="onError"
+        :on-progress="onProgress"
+        :on-change="onChange"
+        :before-upload="beforeUpload"
+        :before-remove="beforeRemove"
+        :http-request="httpRequest"
+        :on-exceed="onExceed"
+        ref="form"
+        :options="options"
+      >
+        <template #uploadArea>
+          <slot name="uploadArea"></slot>
+        </template>
+        <template #uploadTip>
+          <slot name="uploadTip"></slot>
+        </template>
+      </pep-form>
     </template>
     <template #footer>
       <slot name="footer" :form="form"></slot>
@@ -21,6 +46,22 @@ const props = defineProps({
   },
   options: {
     type: Array as PropType<FormOptions[]>,
+  },
+
+  onPreview: Function,
+  onRemove: Function,
+  onSuccess: Function,
+  onError: Function,
+  onProgress: Function,
+  onChange: Function,
+  beforeUpload: Function,
+  beforeRemove: Function,
+  httpRequest: Function,
+  onExceed: Function,
+  isScroll: {
+    // 只在屏幕区域内滚动
+    type: Boolean,
+    default: false,
   },
 });
 
