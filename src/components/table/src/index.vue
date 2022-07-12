@@ -1,5 +1,13 @@
 <template>
-  <el-table :data="data">
+  <el-table
+    v-loading="isLoading"
+    :element-loading-text="elementLoadingText"
+    :element-loading-spinner="elementLoadingSpinner"
+    :element-loading-svg="elementLoadingSvg"
+    :element-loading-background="elementLoadingBackground"
+    :element-loading-svg-view-box="elementLoadingSvgViewBox"
+    :data="data"
+  >
     <template v-for="(item, index) in tableOptions" :key="item.label">
       <el-table-column
         v-if="!item.slot"
@@ -48,6 +56,12 @@ const props = defineProps({
     type: Array as PropType<any[]>,
     required: true,
   },
+
+  elementLoadingText: String, // 加载文案
+  elementLoadingSpinner: String, // 加载图标名
+  elementLoadingSvg: String, // 加载svg图标
+  elementLoadingBackground: String, // 加载的背景颜色
+  elementLoadingSvgViewBox: String, // 加载svg的配置
 });
 
 const tableOptions = computed(() =>
@@ -56,6 +70,8 @@ const tableOptions = computed(() =>
 
 // 找到操作项的配置
 const actionOptions = computed(() => props.options.find((item) => item.action));
+
+const isLoading = computed(() => !props.data || !props.data.length);
 </script>
 
 <style scoped lang="less">
