@@ -5,6 +5,9 @@
       elementLoadingText="加载中......"
       :options="options"
       :data="tableDate"
+      @confirm="confirm"
+      @cancel="cancel"
+      edit-icon="Bottom"
       :element-loading-spinner="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(122, 122, 122, 0.8)"
@@ -53,7 +56,7 @@ setTimeout(() => {
       address: "No. 189, Grove St, Los Angeles",
     },
   ];
-}, 3000);
+});
 
 const options: TableOptions[] = [
   {
@@ -61,6 +64,7 @@ const options: TableOptions[] = [
     prop: "date",
     align: "right",
     width: 300,
+    editable: true,
   },
   {
     label: "名字",
@@ -92,6 +96,13 @@ const svg = `
       `;
 
 const edit = (scope: any) => {
+  console.log(scope);
+};
+
+const confirm = (scope: any) => {
+  console.log(scope);
+};
+const cancel = (scope: any) => {
   console.log(scope);
 };
 </script>
