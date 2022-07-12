@@ -1,6 +1,6 @@
 <template>
   <div style="width: 200px">
-    <!-- <pep-menu
+    <pep-menu
       background-color="#ccc"
       :data="data1"
       default-active="3-1"
@@ -8,8 +8,8 @@
       index="b"
       icon="c"
       children="d"
-    ></pep-menu> -->
-    <pep-infinite-menu
+    ></pep-menu>
+    <!-- <pep-infinite-menu
       background-color="#f40"
       :data="data2"
       default-active="3-1"
@@ -17,7 +17,7 @@
       index="b"
       icon="c"
       children="d"
-    ></pep-infinite-menu>
+    ></pep-infinite-menu> -->
   </div>
 </template>
 
