@@ -1,5 +1,6 @@
 <template>
   <el-table
+    v-bind="$attrs"
     v-loading="isLoading"
     :element-loading-text="elementLoadingText"
     :element-loading-spinner="elementLoadingSpinner"
@@ -67,6 +68,26 @@
       </template>
     </el-table-column>
   </el-table>
+  <div
+    class="pagination"
+    :style="{
+      'justify-content': paginationAlign,
+    }"
+    v-if="pagination"
+  >
+    <el-pagination
+      v-model:currentPage="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="pageSizes"
+      :small="small"
+      :disabled="disabled"
+      :background="background"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -74,7 +95,6 @@ import { computed, onMounted, PropType, ref, watch } from "vue";
 import { TableOptions } from "./type";
 import { toLine } from "../../../utils";
 import cloneDeep from "lodash/cloneDeep";
-import { ro } from "element-plus/es/locale";
 
 const props = defineProps({
   options: {
@@ -106,8 +126,41 @@ const props = defineProps({
     type: String,
     default: "",
   },
+
+  // 分页
+  currentPage: {
+    type: Number,
+    default: 1,
+  },
+  pageSizes: {
+    type: Array as PropType<number[]>,
+    default: [10, 20, 30, 40],
+  },
+
+  pageSize: {
+    type: Number,
+    default: 10,
+  },
+  total: {
+    type: Number,
+  },
+  // 是否分页
+  pagination: {
+    type: Boolean,
+    default: true,
+  },
+  paginationAlign: {
+    type: String as PropType<"flex-start" | "center" | "flex-end">,
+    default: "right",
+  },
 });
-const emits = defineEmits(["confirm", "cancel", "update:editRowIndex"]);
+const emits = defineEmits([
+  "confirm",
+  "cancel",
+  "update:editRowIndex",
+  "size-change",
+  "current-change",
+]);
 
 const currentEdit = ref<string>("");
 // 拷贝一份表格数据,单向数据流
@@ -181,6 +234,16 @@ const handleRowClick = (row: any, column: any) => {
     }
   }
 };
+
+// 分页的条数改变
+const handleSizeChange = (value: number) => {
+  emits("size-change", value);
+};
+
+// 分页的页数改变
+const handleCurrentChange = (value: number) => {
+  emits("current-change", value);
+};
 </script>
 
 <style scoped lang="scss">
@@ -209,5 +272,11 @@ const handleRowClick = (row: any, column: any) => {
   .close {
     color: green;
   }
+}
+
+.pagination {
+  display: flex;
+  margin-top: 16px;
+  align-items: center;
 }
 </style>
