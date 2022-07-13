@@ -1,6 +1,6 @@
 export interface TableOptions {
   label: string // 表头
-  prop?: string
+  prop: string
   width?: string | number
   align?: 'left' | 'center' | 'right'
   slot?: string

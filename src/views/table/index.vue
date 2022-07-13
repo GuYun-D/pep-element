@@ -8,6 +8,8 @@
       @confirm="confirm"
       @cancel="cancel"
       edit-icon="Bottom"
+      isEditRow
+      v-model:editRowIndex="editRowIndex"
       :element-loading-spinner="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(122, 122, 122, 0.8)"
@@ -16,12 +18,21 @@
         <el-button type="primary" @click="edit(scope)" size="default"
           >编辑</el-button
         >
+
+        <el-button type="primary" @click="deleteRow(scope)" size="default"
+          >删除</el-button
+        >
       </template>
 
       <template #name="{ scope }">
         <div class="name">
           {{ scope.row.name }}
         </div>
+      </template>
+
+      <template #editRow> 
+        <el-button>确认</el-button>
+        <el-button>取消</el-button>
       </template>
     </pep-table>
   </div>
@@ -32,6 +43,7 @@ import { ref } from "vue-demi";
 import { TableOptions } from "../../components/table/src/type";
 
 const tableDate = ref<any[]>();
+const editRowIndex = ref<string>("edit");
 
 setTimeout(() => {
   tableDate.value = [
@@ -79,6 +91,7 @@ const options: TableOptions[] = [
   },
   {
     label: "操作",
+    prop: 'actions',
     align: "center",
     action: true,
   },
@@ -98,6 +111,8 @@ const svg = `
 const edit = (scope: any) => {
   console.log(scope);
 };
+
+const deleteRow = (scope: any) => {};
 
 const confirm = (scope: any) => {
   console.log(scope);
