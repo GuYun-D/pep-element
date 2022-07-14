@@ -15,7 +15,7 @@
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(122, 122, 122, 0.8)"
       :currentPage="currentPage"
-      :pageSizes="pageSize"
+      :pageSize="pageSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
@@ -48,7 +48,7 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import { TableOptions } from "../../components/table/src/type";
 
-const tableDate = ref<any[]>();
+const tableDate = ref<any[]>([]);
 const editRowIndex = ref<string>("edit");
 
 const currentPage = ref<number>(1);

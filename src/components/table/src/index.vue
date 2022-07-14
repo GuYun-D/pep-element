@@ -76,12 +76,12 @@
     v-if="pagination"
   >
     <el-pagination
-      v-model:currentPage="currentPage"
-      v-model:page-size="pageSize"
+      v-model:currentPage="tableCurrentPage"
+      v-model:page-size="tablePageSize"
       :page-sizes="pageSizes"
       :small="small"
       :disabled="disabled"
-      :background="background"
+      :background="pagnationBackground"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       @size-change="handleSizeChange"
@@ -153,6 +153,19 @@ const props = defineProps({
     type: String as PropType<"flex-start" | "center" | "flex-end">,
     default: "right",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  small: {
+    type: Boolean,
+    default: false,
+  },
+  pagnationBackground: {
+    // 是否为分页按钮添加背景颜色
+    type: Boolean,
+    default: false,
+  },
 });
 const emits = defineEmits([
   "confirm",
@@ -166,6 +179,9 @@ const currentEdit = ref<string>("");
 // 拷贝一份表格数据,单向数据流
 const tableDate = ref(cloneDeep(props.data));
 const cloneEditRowIndex = ref<string>(props.editRowIndex);
+
+const tableCurrentPage = ref(props.currentPage)
+const tablePageSize = ref(props.pageSize)
 
 const tableOptions = computed(() =>
   props.options.filter((item) => !item.action)
