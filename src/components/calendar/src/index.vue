@@ -3,10 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import { Calendar } from "@fullcalendar/core";
+import { Calendar, EventClickArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
-import interaction from "@fullcalendar/interaction";
-import { ref, onMounted } from "vue";
+import interaction, { DateClickArg } from "@fullcalendar/interaction";
+import { ref, onMounted, PropType, watch } from "vue";
+import { EventItem } from "./types";
 
 const props = defineProps({
   locl: {
@@ -52,7 +53,14 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  // 事件源
+  events: {
+    type: Array as PropType<EventItem[]>,
+    default: () => [],
+  },
 });
+
+const emits = defineEmits(["dateClick", "eventClick"]);
 
 const calendar = ref<Calendar>();
 
@@ -66,16 +74,41 @@ const renderCalendar = () => {
       buttonText: props.buttonText,
       headerToolbar: props.headerToolbar,
       footerToolbar: props.footerToolbar,
+      eventSources: [
+        {
+          events(e, callBack) {
+            if (props.events.length) callBack(props.events);
+            else callBack([]);
+          },
+        },
+      ],
+
+      // 点击日历上的某一天
+      dateClick(info: DateClickArg) {
+        emits("dateClick", info);
+      },
+
+      // 点击待办事的回调
+      eventClick(info: EventClickArg) {
+        emits("eventClick", info);
+      },
     });
 
-    calendar.value.render()
+    calendar.value.render();
   }
 };
 
 onMounted(() => {
   renderCalendar();
 });
+
+watch(
+  () => props.events,
+  () => {
+    renderCalendar();
+  },
+  { deep: true }
+);
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
