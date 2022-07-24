@@ -7,7 +7,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "commit": "cz"
+    "commit": "cz",
+    "build:pep": "node ./command/build.js",
+    "lib": "npm run build:pep"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
