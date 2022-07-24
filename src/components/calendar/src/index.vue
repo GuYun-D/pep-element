@@ -3,9 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { Calendar, EventClickArg } from "@fullcalendar/core";
+import { Calendar, EventClickArg, EventContentArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
 import interaction, { DateClickArg } from "@fullcalendar/interaction";
+import { en } from "element-plus/es/locale";
 import { ref, onMounted, PropType, watch } from "vue";
 import { EventItem } from "./types";
 
@@ -58,6 +59,14 @@ const props = defineProps({
     type: Array as PropType<EventItem[]>,
     default: () => [],
   },
+  // 显示结束时间
+  displayEventEnd: {
+    type: Boolean,
+    default: false,
+  },
+  eventContent: {
+    type: Function
+  }
 });
 
 const emits = defineEmits(["dateClick", "eventClick"]);
@@ -92,6 +101,9 @@ const renderCalendar = () => {
       eventClick(info: EventClickArg) {
         emits("eventClick", info);
       },
+
+      displayEventEnd: props.displayEventEnd,
+      eventContent: props.eventContent
     });
 
     calendar.value.render();
