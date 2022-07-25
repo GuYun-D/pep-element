@@ -1,0 +1,8 @@
+
+  {
+    "name": "progress",
+    "main": "index.umd.js",
+    "moudle": "index.es.js",
+    "style": "style.css"
+  }
+  

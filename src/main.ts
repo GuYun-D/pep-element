@@ -8,6 +8,8 @@ import { toLine } from './utils'
 // import PeUi from './components'
 import PeUi from '../lib/pep-element.es.js'
 import '../lib/style.css'
+// import IconChoose from '../lib/IconChoose/index.es' 
+import '../lib/IconChoose/style.css'
 
 import './mock'
 
@@ -17,7 +19,11 @@ for (let icon in ElementPlusIconsVue) {
   app.component(`el-icon-${toLine(icon)}`, (ElementPlusIconsVue as any)[icon])
 }
 
-app.use(router).use(ElementPlus).use(PeUi)
+app
+.use(router)
+.use(ElementPlus)
+.use(PeUi)
+// .use(IconChoose)
 app.mount('#app')
 
 export { }
