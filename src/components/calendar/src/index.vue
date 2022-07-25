@@ -6,7 +6,6 @@
 import { Calendar, EventClickArg, EventContentArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
 import interaction, { DateClickArg } from "@fullcalendar/interaction";
-import { en } from "element-plus/es/locale";
 import { ref, onMounted, PropType, watch } from "vue";
 import { EventItem } from "./types";
 

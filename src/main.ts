@@ -5,8 +5,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { toLine } from './utils'
-// import PeUi from './components'
-import PeUi from '../lib/pep-element.es.js'
+import PeUi from './components/index.js'
+// import PeUi from '../lib/index.es.js'
 import '../lib/style.css'
 // import IconChoose from '../lib/IconChoose/index.es' 
 import '../lib/IconChoose/style.css'
@@ -23,7 +23,6 @@ app
 .use(router)
 .use(ElementPlus)
 .use(PeUi)
-// .use(IconChoose)
 app.mount('#app')
 
 export { }
